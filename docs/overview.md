@@ -8,10 +8,27 @@
 - **Scripts**: TypeScript deploy scripts for testnet/mainnet.
 - **Examples**: SDK usage samples for read/write calls.
 - **Tests**: Contract interface and script sanity checks.
+- **Config**: Network contract addresses in `config/addresses.json`.
+- **CI**: GitHub Actions workflow runs lint and tests on push/PR.
 
 ## Network
 
 Current default network: **testnet** (set via `STACKS_NETWORK=testnet`).
+
+To switch to mainnet, set `STACKS_NETWORK=mainnet` in your `.env`.
+
+## Environment
+
+Create a `.env` file based on `.env.example` with:
+
+- `PRIVATE_KEY`
+- `STACKS_NETWORK` (`testnet` or `mainnet`)
+- `CONTRACT_ADDRESS` (optional override)
+- `SENDER_ADDRESS` (used for read-only calls)
+
+## Addresses
+
+Contract addresses are tracked in `config/addresses.json` for both testnet and mainnet.
 
 ## Contract Specs
 
@@ -63,3 +80,13 @@ $$
 3. **Front-End Switching**: update SDK and UI to point to the latest contract address after migration.
 4. **Deprecation Window**: keep old contracts operational for a fixed period, then retire UI support.
 5. **Audit Before Release**: perform security review and testnet validation before mainnet deployment.
+
+## Scripts and Tests
+
+**Deploy Scripts**
+- `scripts/deploy-did.ts`
+- `scripts/deploy-scoring.ts`
+
+**Tests**
+- `tests/test-contracts.ts`
+- `tests/test-scripts.ts`
