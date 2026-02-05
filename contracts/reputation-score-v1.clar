@@ -17,6 +17,11 @@
     total-score: uint
 })
 
+;; Getter: Fetch user score
+(define-read-only (get-score (user principal))
+    (map-get? user-scores user)
+)
+
 (define-private (calculate-score (votes uint) (loans uint) (auctions uint))
     (+ 
         (* votes u10)
