@@ -11,6 +11,21 @@ import * as path from 'path';
 // Env vars documented in .env.example
 dotenv.config({ path: '.env' });
 
+export function getNetwork() {
+  return process.env.STACKS_NETWORK === 'mainnet' ? STACKS_MAINNET : STACKS_TESTNET;
+}
+
+export function getDidDeployOptions(codeBody: string, senderKey: string) {
+  const network = getNetwork();
+  return {
+    contractName: 'identity-provider-v1',
+    codeBody,
+    senderKey,
+    network,
+    anchorBlockOnly: true,
+  };
+}
+
 async function deployDID() {
   const privateKey = process.env.PRIVATE_KEY;
   if (!privateKey) {
@@ -21,15 +36,8 @@ async function deployDID() {
   const contractPath = path.join(__dirname, '../contracts/identity-provider-v1.clar');
   const codeBody = fs.readFileSync(contractPath, 'utf8');
 
-  const network = process.env.STACKS_NETWORK === 'mainnet' ? STACKS_MAINNET : STACKS_TESTNET;
-
-  const txOptions = {
-    contractName: 'identity-provider-v1',
-    codeBody,
-    senderKey: privateKey,
-    network,
-    anchorBlockOnly: true,
-  };
+  const txOptions = getDidDeployOptions(codeBody, privateKey);
+  const { network } = txOptions;
 
   try {
     const transaction = await makeContractDeploy(txOptions);
@@ -40,4 +48,6 @@ async function deployDID() {
   }
 }
 
-deployDID();
+if (require.main === module) {
+  deployDID();
+}
