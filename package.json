@@ -6,7 +6,7 @@
   "scripts": {
     "build": "tsc -p tsconfig.json",
     "lint": "tsc -p tsconfig.json --noEmit",
-    "test": "tsx tests/test-1.ts"
+    "test": "tsx tests/test-contracts.ts && tsx tests/test-scripts.ts"
   },
   "keywords": [],
   "author": "",
