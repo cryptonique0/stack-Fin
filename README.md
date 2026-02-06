@@ -101,8 +101,20 @@ const profile = await callReadOnlyFunction({
 console.log(profile);
 ```
 
-## SDK Usage
+## Stacks SDK Bundle
+
+All Stacks SDK packages are available via a single entry point:
 
 ```typescript
-import { makeContractCall } from '@stacks/transactions';
+import { transactions, auth, storage, profile, encryption, walletSdk, connect, bns, apiClient, getStacksNetwork } from './utils/stacks';
+
+const network = getStacksNetwork();
+const tx = await transactions.makeContractCall({
+	contractAddress: 'SPXXXX...',
+	contractName: 'identity-provider-v1',
+	functionName: 'update-profile',
+	functionArgs: [],
+	senderKey: process.env.PRIVATE_KEY as string,
+	network,
+});
 ```

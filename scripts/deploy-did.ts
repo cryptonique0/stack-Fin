@@ -3,7 +3,7 @@ import {
   makeContractDeploy, 
   broadcastTransaction, 
 } from '@stacks/transactions';
-import { STACKS_TESTNET, STACKS_MAINNET } from '@stacks/network';
+import { getStacksNetwork } from '../utils/stacks';
 import * as fs from 'fs';
 import * as dotenv from 'dotenv';
 import * as path from 'path';
@@ -12,7 +12,7 @@ import * as path from 'path';
 dotenv.config({ path: '.env' });
 
 export function getNetwork() {
-  return process.env.STACKS_NETWORK === 'mainnet' ? STACKS_MAINNET : STACKS_TESTNET;
+  return getStacksNetwork();
 }
 
 export function getDidDeployOptions(codeBody: string, senderKey: string) {
